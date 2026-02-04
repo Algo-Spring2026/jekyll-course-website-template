@@ -8,7 +8,7 @@ permalink: /materials/
 
 ## Book
 
-Algorithm Desigin - Spring 20266 - Dr. Eskandari
+Algorithm Desigin - Spring 2026 - Dr. Eskandari
 
 ## Additional Course Materials
 
