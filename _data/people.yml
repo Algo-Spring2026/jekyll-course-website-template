@@ -2,20 +2,23 @@ instructors:
   - name: Dr.Amin Eskandari  
     profile_pic: /_images/pp/professor.jpg
     webpage: https://www.linkedin.com/amin-eskandari
+    
   
 
 teaching_assistants:
   - name: Nima Soltani 
     profile_pic: /_images/pp/nima soltani.jpg
-    webpage: https://en.wikipedia.org/wiki/Harry_Potter_(character)
+    email: solinim1382@gmail.com
 
   - name: Viana Hassan Beigy
     profile_pic: /_images/pp/viana hassan begie.JPEG
+    telegram: @viannahb
     webpage: https://www.linldin.com/viana-h
 
   - name:  Reza Rezaei
     profile_pic: /_images/pp/reaza rezaei.jpg
-    webpage: https://en.wikipedia.org/wiki/Ron_Weasley
+    telegram: @reza_rz83
+    email: rezarezaee13966@gmail.com
 
   - name: Hamid Namjoo  
     profile_pic: /_images/pp/Hamid_Namjoo.jpg
@@ -23,5 +26,5 @@ teaching_assistants:
 
   - name: Ali Nikwan 
     profile_pic: /_images/pp/ali nikwan.jpg
-    webpage: https://https://www.linldin.com
+    telegram: @xalleenx
 
