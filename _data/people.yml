@@ -1,19 +1,18 @@
 instructors:
   - name: دکتر امین اسکندری
-    profile_pic: /_images/pp/dumbledore.jpg
-    webpage: https://en.wikipedia.org/wiki/Albus_Dumbledore
-  - name: Minerva McGonagall
-    profile_pic: /_images/pp/mcgonagall.jpg
+    profile_pic: 
+    webpage: https://www.linkedin.com/in/amin-eskandari-1756a73b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
+  
 
 teaching_assistants:
-  - name: Harry Potter
+  - name: نیما سلطانی
     profile_pic: /_images/pp/potter.jpg
     webpage: https://en.wikipedia.org/wiki/Harry_Potter_(character)
 
-  - name: Hermione Granger
+  - name: ویانا حسن بیگی
     profile_pic: /_images/pp/granger.jpg
     webpage: https://en.wikipedia.org/wiki/Hermione_Granger
 
-  - name: Ron Weasley
+  - name: رضا رضایی
     profile_pic: /_images/pp/weasley.jpg
     webpage: https://en.wikipedia.org/wiki/Ron_Weasley
