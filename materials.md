@@ -9,7 +9,7 @@ permalink: /materials/
 ## Book
 
 Algorithm Desigin - Spring 2026 - Dr. Eskandari
-[Download full textbook (PDF)](/static_files/presentations/algorithm_book.pdf)
+[Download full textbook (PDF)](/static_files/presentations/algorithms_spring2026.pdf)
 
 ## Additional Course Materials
 
