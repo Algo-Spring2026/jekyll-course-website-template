@@ -8,7 +8,7 @@ permalink: /materials/
 
 ## Book
 
-Alan Turing and Noam Chomsky: Very Famous Book
+Algorithm Desigin - Spring 20266 - Dr. Eskandari
 
 ## Additional Course Materials
 
