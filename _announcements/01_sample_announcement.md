@@ -1,4 +1,6 @@
 ---
-date: 2018-10-03T10:00:00+3:30
+title: "Welcome to Algorithm Design Course"
+date: 2025-03-22
 ---
-Sample announcement, Please check out [here](/).
+
+**Welcome to Algorithm Design - Spring 2026!**
