@@ -28,5 +28,3 @@ Algorithm Desigin - Spring 2026 - Dr. Eskandari
 * [Python for Beginners](https://docs.python.org/3/tutorial/) - Official Python tutorial
 * [Visualgo](https://visualgo.net) - Algorithm visualizations
 * [GeeksforGeeks](https://geeksforgeeks.org) - Algorithm problems and solutions
-* [Course Lecture Slides](/lectures/) - Weekly lecture slides
-* [Practice Assignments](/assignments/) - Homework and exercises
