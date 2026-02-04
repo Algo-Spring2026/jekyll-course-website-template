@@ -1,6 +1,6 @@
 ---
 title: "Welcome to Algorithm Design Course"
-date: 2025-03-22
+date: 2026-02-05
 ---
 
 **Welcome to Algorithm Design - Spring 2026!**
