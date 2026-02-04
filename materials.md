@@ -11,6 +11,18 @@ permalink: /materials/
 Algorithm Desigin - Spring 2026 - Dr. Eskandari
 [Download full textbook (PDF)](/static_files/presentations/algorithms_spring2026.pdf)
 
+---
+
+## Recommended Books & References
+
+1. **"Introduction to Algorithms"** - Cormen, Leiserson, Rivest, Stein
+2. **"Algorithm Design Manual"** - Steven Skiena
+3. **Online Judge Practice:**
+   - [LeetCode](https://leetcode.com/)
+   - [HackerRank](https://www.hackerrank.com/)
+
+*More resources will be added during the semester.*
+
 ## Additional Course Materials
 
 * [Python for Beginners](https://docs.python.org/3/tutorial/) - Official Python tutorial
