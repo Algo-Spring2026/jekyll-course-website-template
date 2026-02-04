@@ -1,7 +1,7 @@
 instructors:
   - name: دکتر امین اسکندری
     profile_pic: /_images/pp/professor.jpg
-    webpage: https://www.linkedin.com/in/amin-eskandari-1756a73b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
+    webpage: https://www.linkedin.com/amin-eskandari
   
 
 teaching_assistants:
@@ -11,8 +11,17 @@ teaching_assistants:
 
   - name: ویانا حسن بیگی
     profile_pic: /_images/pp/granger.jpg
-    webpage: https://en.wikipedia.org/wiki/Hermione_Granger
+    webpage: https://www.linldin.com/viana-h
 
   - name: رضا رضایی
     profile_pic: /_images/pp/weasley.jpg
     webpage: https://en.wikipedia.org/wiki/Ron_Weasley
+
+  - name: حمید نامجو 
+    profile_pic: /_images/pp/weasley.jpg
+    webpage: https://https://www.linldin.com/hmaid-namjoo
+
+  - name: علی نیکوان
+    profile_pic: /_images/pp/weasley.jpg
+    webpage: https://https://www.linldin.com
+
