@@ -9,12 +9,12 @@ permalink: /materials/
 ## Book
 
 Algorithm Desigin - Spring 2026 - Dr. Eskandari
+[Download full textbook (PDF)](/static_files/presentations/algorithm_book.pdf)
 
 ## Additional Course Materials
 
-* If you are not familiar with Python programming, use any online tutorial to get a handle of it.
-* [Material #1](http://www.example.com/): how a computer chess player thinks!
-* [Material #2](http://www.example.com/): how a computer chess player thinks!
-* [Material #3](http://www.example.com/): how a computer chess player thinks!
-* [Material #4](http://www.example.com/): how a computer chess player thinks!
-* [Material #5](http://www.example.com/): how a computer chess player thinks!
+* [Python for Beginners](https://docs.python.org/3/tutorial/) - Official Python tutorial
+* [Visualgo](https://visualgo.net) - Algorithm visualizations
+* [GeeksforGeeks](https://geeksforgeeks.org) - Algorithm problems and solutions
+* [Course Lecture Slides](/lectures/) - Weekly lecture slides
+* [Practice Assignments](/assignments/) - Homework and exercises
