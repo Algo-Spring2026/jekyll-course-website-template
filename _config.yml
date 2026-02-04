@@ -3,8 +3,8 @@ course_name: "Algorithm Design"
 course_description: "This course introduces fundamental principles and formal techniques for designing and analyzing algorithms. Core topics include classical design paradigms, complexity analysis, and correctness reasoning. Emphasis is placed on developing efficient solutions to computational problems and evaluating algorithmic performance within theoretical and practical contexts"
 course_semester: "spring 2026"
 
-baseurl: "/jekyll-course-website-template" # the subpath of your site, e.g. /blog/
-url: "http://kazemnejad.github.io/" # the base hostname & protocol for your site
+baseurl: ""  # خالی بگذار
+url: "https://algo-spring2026.github.io"  # آدرس سایت شما
 
 schoolname: "Islamic Azad University Shiraz Branch"
 schoolurl: "https://Shiraz.iau.ir"
