@@ -6,6 +6,21 @@ instructors:
   
 
 teaching_assistants:
+  - name: Hamid Namjoo  
+    profile_pic: /_images/pp/Hamid_Namjoo.jpg
+    webpage: https://www.linkedin.com/in/hmaid-namjoo
+
+  - name: Amirhossein Hemmati
+    profile_pic: / _images/amir hossein hemati.jpg
+    webpage: "https://t.me/A2_1380"
+    telegram: "@A2_1380"
+    email: ""
+    
+  - name: Ali Nikvan 
+    profile_pic: /_images/pp/ali nikwan.jpg
+    webpage: "https://t.me/xalleenx"
+    telegram: "@xalleenx"
+
   - name: Nima Soltani 
     profile_pic: /_images/pp/nima soltani.jpg
     webpage: "https://t.me/nim5s0li"
@@ -21,15 +36,6 @@ teaching_assistants:
     webpage: "https://t.me/reza_rz83"
     telegram: "@reza_rz83"
     email: rezarezaee13966@gmail.com
-
-  - name: Hamid Namjoo  
-    profile_pic: /_images/pp/Hamid_Namjoo.jpg
-    webpage: https://www.linkedin.com/in/hmaid-namjoo
-
-  - name: Ali Nikvan 
-    profile_pic: /_images/pp/ali nikwan.jpg
-    webpage: "https://t.me/xalleenx"
-    telegram: "@xalleenx"
 
   - name: Babak Janfaza 
     profile_pic: /_images/babak.jpg
@@ -49,9 +55,13 @@ teaching_assistants:
     telegram: ""
     email: kimdarknes1122@gmail.com
 
-
   - name: Maryam Meidanshahi
     profile_pic: /_images/maryam meidanshahi.jpg
     webpage: "https://www.linkedin.com/in/maryam-meidanshahi"
     telegram: "@Yalda_Msh"
     email: ""
+
+
+
+   
+  
