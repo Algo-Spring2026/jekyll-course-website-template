@@ -11,7 +11,7 @@ layout: default
 
     <h2>Course Description</h2>
     <p>{{ site.course_description }}</p>
-
+    
     {{ content }}
 
     {% if site.data.previous_offering and site.data.previous_offering.offerings and site.data.previous_offering.offerings.size > 0 %}
@@ -25,102 +25,43 @@ layout: default
 
     <br>
 
-    <!-- ========== تیم آموزشی (چیدمان جدید) ========== -->
+    <!-- ===== بخش اساتید و head TAها ===== -->
     <div style="text-align: center; margin-top: 20px;">
 
-        {% assign instructors = site.data.people.instructors %}
-        {% assign all_tas = site.data.people.teaching_assistants %}
-        {% assign head_tas = all_tas | slice:0,2 %}
-        {% assign other_tas = all_tas | slice:2, 999 %}
-
-        <!-- ردیف اساتید -->
+        <!-- اساتید -->
         <h2>Instructors</h2>
-        <div class="team-row">
-            {% for ins in instructors %}
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
+            {% for ins in site.data.people.instructors %}
             <div class="image--cover-container">
                 <img src="{{ ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
                 {% if ins.webpage %}
-                    <p><a href="{{ ins.webpage }}">{{ ins.name }}</a></p>
+                <p><a href="{{ ins.webpage }}">{{ ins.name }}</a></p>
                 {% else %}
-                    <p>{{ ins.name }}</p>
+                <p>{{ ins.name }}</p>
                 {% endif %}
             </div>
             {% endfor %}
         </div>
 
-        <!-- ردیف سرگروه‌یاران (دو نفر اول) -->
+        <!-- دو نفر اول به عنوان head TA (در صورت وجود) -->
+        {% assign head_tas = site.data.people.teaching_assistants | slice:0,2 %}
         {% if head_tas.size > 0 %}
-        <h2 style="margin-top: 30px;">Head Teaching Assistants</h2>
-        <div class="team-row">
+        <h2>Head Teaching Assistants</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
             {% for ta in head_tas %}
             <div class="image--cover-container">
                 <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
                 {% if ta.webpage %}
-                    <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
                 {% else %}
-                    <p>{{ ta.name }}</p>
+                <p>{{ ta.name }}</p>
                 {% endif %}
             </div>
             {% endfor %}
         </div>
         {% endif %}
 
-        <!-- ردیف‌های باقی TAها (هر ردیف حداکثر ۴ نفر) -->
-        {% if other_tas.size > 0 %}
-        <h2 style="margin-top: 30px;">Teaching Assistants</h2>
-        {% assign items_per_row = 4 %}
-        {% assign total_others = other_tas | size %}
-        {% assign rows_count = total_others | divided_by: items_per_row %}
-        {% assign remainder = total_others | modulo: items_per_row %}
-        {% if remainder > 0 %}
-            {% assign rows_count = rows_count | plus: 1 %}
-        {% endif %}
-
-        {% for row in (1..rows_count) %}
-            {% assign start_index = row | minus: 1 | times: items_per_row %}
-            <div class="team-row">
-                {% for offset in (0..items_per_row) %}
-                    {% assign item_index = start_index | plus: offset %}
-                    {% if item_index < total_others %}
-                        {% assign ta = other_tas[item_index] %}
-                        <div class="image--cover-container">
-                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                            {% if ta.webpage %}
-                                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                            {% else %}
-                                <p>{{ ta.name }}</p>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endfor %}
-        {% endif %}
     </div>
-    <!-- ========== پایان چیدمان تیم ========== -->
+    <!-- ===== پایان بخش ===== -->
 
 </div>
-
-<style>
-/* استایل ردیف‌های تیم */
-.team-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
-    gap: 15px;
-}
-
-/* تنظیم عرض کارت‌ها (هماهنگ با استایل اصلی) */
-.team-row .image--cover-container {
-    width: 130px;
-    margin: 0;
-}
-
-/* واکنش‌گرایی برای موبایل */
-@media (max-width: 600px) {
-    .team-row .image--cover-container {
-        width: 100px;
-    }
-}
-</style>
