@@ -25,7 +25,7 @@ layout: default
 
     <br>
 
-    <!-- ========== هرم و ردیف‌ها ========== -->
+    <!-- ========== تیم آموزشی (چیدمان جدید) ========== -->
     <div style="text-align: center; margin-top: 20px;">
 
         {% assign instructors = site.data.people.instructors %}
@@ -33,9 +33,9 @@ layout: default
         {% assign head_tas = all_tas | slice:0,2 %}
         {% assign other_tas = all_tas | slice:2, 999 %}
 
-        <!-- ردیف اول: اساتید (نوک هرم) -->
+        <!-- ردیف اساتید -->
         <h2>Instructors</h2>
-        <div class="pyramid-row">
+        <div class="team-row">
             {% for ins in instructors %}
             <div class="image--cover-container">
                 <img src="{{ ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
@@ -48,10 +48,10 @@ layout: default
             {% endfor %}
         </div>
 
-        <!-- ردیف دوم: head TAها -->
+        <!-- ردیف سرگروه‌یاران (دو نفر اول) -->
         {% if head_tas.size > 0 %}
         <h2 style="margin-top: 30px;">Head Teaching Assistants</h2>
-        <div class="pyramid-row">
+        <div class="team-row">
             {% for ta in head_tas %}
             <div class="image--cover-container">
                 <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
@@ -65,44 +65,45 @@ layout: default
         </div>
         {% endif %}
 
-        <!-- ردیف‌های بعدی: بقیه TAها به صورت ردیفی (۴ تایی در هر ردیف) -->
+        <!-- ردیف‌های باقی TAها (هر ردیف حداکثر ۴ نفر) -->
         {% if other_tas.size > 0 %}
-            <h2 style="margin-top: 30px;">Teaching Assistants</h2>
-            {% assign items_per_row = 4 %}
-            {% assign total_others = other_tas | size %}
-            {% assign rows_count = total_others | divided_by: items_per_row %}
-            {% assign remainder = total_others | modulo: items_per_row %}
-            {% if remainder > 0 %}
-                {% assign rows_count = rows_count | plus: 1 %}
-            {% endif %}
+        <h2 style="margin-top: 30px;">Teaching Assistants</h2>
+        {% assign items_per_row = 4 %}
+        {% assign total_others = other_tas | size %}
+        {% assign rows_count = total_others | divided_by: items_per_row %}
+        {% assign remainder = total_others | modulo: items_per_row %}
+        {% if remainder > 0 %}
+            {% assign rows_count = rows_count | plus: 1 %}
+        {% endif %}
 
-            {% for row in (1..rows_count) %}
-                {% assign start_index = row | minus: 1 | times: items_per_row %}
-                <div class="pyramid-row">
-                    {% for offset in (0..items_per_row) %}
-                        {% assign item_index = start_index | plus: offset %}
-                        {% if item_index < total_others %}
-                            {% assign ta = other_tas[item_index] %}
-                            <div class="image--cover-container">
-                                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                                {% if ta.webpage %}
-                                    <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                                {% else %}
-                                    <p>{{ ta.name }}</p>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            {% endfor %}
+        {% for row in (1..rows_count) %}
+            {% assign start_index = row | minus: 1 | times: items_per_row %}
+            <div class="team-row">
+                {% for offset in (0..items_per_row) %}
+                    {% assign item_index = start_index | plus: offset %}
+                    {% if item_index < total_others %}
+                        {% assign ta = other_tas[item_index] %}
+                        <div class="image--cover-container">
+                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                            {% if ta.webpage %}
+                                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                            {% else %}
+                                <p>{{ ta.name }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
         {% endif %}
     </div>
-    <!-- ========== پایان ========== -->
+    <!-- ========== پایان چیدمان تیم ========== -->
 
 </div>
 
 <style>
-.pyramid-row {
+/* استایل ردیف‌های تیم */
+.team-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -110,32 +111,16 @@ layout: default
     gap: 15px;
 }
 
-.image--cover-container {
+/* تنظیم عرض کارت‌ها (هماهنگ با استایل اصلی) */
+.team-row .image--cover-container {
     width: 130px;
     margin: 0;
-    text-align: center;
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: 10px 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.image--cover {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 8px;
-}
-
+/* واکنش‌گرایی برای موبایل */
 @media (max-width: 600px) {
-    .image--cover-container {
+    .team-row .image--cover-container {
         width: 100px;
-        padding: 5px;
-    }
-    .image--cover {
-        width: 70px;
-        height: 70px;
     }
 }
 </style>
