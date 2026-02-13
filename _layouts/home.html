@@ -33,30 +33,24 @@ layout: default
         {% assign other_tas = all_tas | slice:2, 999 %}
 
         <!-- ردیف اول: اساتید (نوک هرم) -->
-        <div class="pyramid-row instructors-row">
+        <div class="pyramid-row">
             {% for ins in instructors %}
-            <div class="image--cover-container instructor-item">
+            <div class="image--cover-container">
                 <img src="{{ ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                {% if ins.webpage %}
-                <p><a href="{{ ins.webpage }}">{{ ins.name }}</a></p>
-                {% else %}
-                <p>{{ ins.name }}</p>
-                {% endif %}
+                <p><strong>{{ ins.name }}</strong><br><span class="role-badge instructor">Instructor</span></p>
+                {% if ins.webpage %}<p><a href="{{ ins.webpage }}">وب‌سایت</a></p>{% endif %}
             </div>
             {% endfor %}
         </div>
 
         <!-- ردیف دوم: head TAها -->
         {% if head_tas.size > 0 %}
-        <div class="pyramid-row head-ta-row">
+        <div class="pyramid-row">
             {% for ta in head_tas %}
-            <div class="image--cover-container head-ta-item">
+            <div class="image--cover-container">
                 <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                {% if ta.webpage %}
-                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                {% else %}
-                <p>{{ ta.name }}</p>
-                {% endif %}
+                <p><strong>{{ ta.name }}</strong><br><span class="role-badge head-ta">Head TA</span></p>
+                {% if ta.webpage %}<p><a href="{{ ta.webpage }}">وب‌سایت</a></p>{% endif %}
             </div>
             {% endfor %}
         </div>
@@ -82,11 +76,8 @@ layout: default
                         {% assign ta = remaining[index] %}
                         <div class="image--cover-container">
                             <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                            {% if ta.webpage %}
-                                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                            {% else %}
-                                <p>{{ ta.name }}</p>
-                            {% endif %}
+                            <p><strong>{{ ta.name }}</strong><br><span class="role-badge ta">TA</span></p>
+                            {% if ta.webpage %}<p><a href="{{ ta.webpage }}">وب‌سایت</a></p>{% endif %}
                         </div>
                         {% assign index = index | plus: 1 %}
                     {% endfor %}
@@ -104,36 +95,49 @@ layout: default
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 15px;
-    gap: 10px;
+    margin-bottom: 20px;
+    gap: 15px;
 }
 
-.pyramid-row .image--cover-container {
-    width: 120px; /* عرض پایه برای TAهای عادی */
+.image--cover-container {
+    width: 130px; /* اندازه یکسان برای همه */
     margin: 0;
     text-align: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* اساتید بزرگتر */
-.instructors-row .image--cover-container {
-    width: 150px;
+.image--cover {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
 }
 
-/* سرگروه‌یاران کمی بزرگتر از بقیه */
-.head-ta-row .image--cover-container {
-    width: 130px;
+.role-badge {
+    display: inline-block;
+    font-size: 0.75em;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: white;
+    margin-top: 4px;
 }
+
+.role-badge.instructor { background-color: #2c3e50; }
+.role-badge.head-ta { background-color: #16a085; }
+.role-badge.ta { background-color: #7f8c8d; }
 
 @media (max-width: 600px) {
-    .pyramid-row .image--cover-container {
-        width: 80px;
-        font-size: 0.9em;
-    }
-    .instructors-row .image--cover-container {
+    .image--cover-container {
         width: 100px;
+        padding: 5px;
     }
-    .head-ta-row .image--cover-container {
-        width: 90px;
+    .image--cover {
+        width: 70px;
+        height: 70px;
     }
 }
 </style>
