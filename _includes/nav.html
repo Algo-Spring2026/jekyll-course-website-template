@@ -1,36 +1,66 @@
 <style>
+/* منوی ناوبری - تنظیمات اصلی */
+.site-nav {
+    text-align: center; /* برای مرورگرهای قدیمی */
+    margin: 20px 0;
+}
+
 ul.menu {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     list-style: none;
     padding: 0;
     margin: 0;
+    gap: 20px; /* فاصله یکسان بین آیتم‌ها */
 }
+
 ul.menu li {
-    margin: 0 15px; /* فاصله افقی بین آیتم‌ها */
+    margin: 0; /* حذف حاشیه‌های اضافی */
 }
+
 ul.menu li a {
+    display: inline-block;
+    padding: 8px 12px;
     text-decoration: none;
-    color: #333; /* رنگ دلخواه (می‌توانید بر اساس تم سایت تغییر دهید) */
+    color: #2c3e50; /* رنگ تیره و حرفه‌ای */
     font-weight: 500;
     font-size: 1.1rem;
-    transition: color 0.2s;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 }
-ul.menu li a:hover {
-    color: #007bff; /* رنگ هنگام هاور */
-}
-/* اگر آیکون و متن فاصله نیاز دارند */
+
 ul.menu li a i {
-    margin-right: 5px;
+    margin-right: 6px;
+    font-size: 1rem;
+}
+
+ul.menu li a:hover {
+    background-color: #f0f7ff;
+    color: #007bff;
+}
+
+/* حالت موبایل: اگر فضای کافی نبود، آیتم‌ها زیر هم قرار گیرند */
+@media (max-width: 600px) {
+    ul.menu {
+        gap: 10px;
+    }
+    ul.menu li a {
+        font-size: 0.95rem;
+        padding: 6px 8px;
+    }
 }
 </style>
 
-<ul class="menu">
-    {% for item in site.data.nav.items %}
-    <li>
-        <a class="page-link" href="{{ item.url | prepend: site.baseurl }}">
-            <i class="{{ item.icon_class }}"></i> {{ item.name }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+<nav class="site-nav">
+    <ul class="menu">
+        {% for item in site.data.nav.items %}
+        <li>
+            <a class="page-link" href="{{ item.url | prepend: site.baseurl }}">
+                <i class="{{ item.icon_class }}"></i> {{ item.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
