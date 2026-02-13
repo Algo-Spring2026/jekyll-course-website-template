@@ -1,30 +1,30 @@
 <style>
-ul.menu {
+ul.menu-left {
     display: flex;
     justify-content: flex-start; /* چپ‌چین */
     list-style: none;
     padding: 0;
     margin: 0;
 }
-ul.menu li {
-    margin: 0 15px 0 0; /* فاصله فقط از راست (چپ هر آیتم به ابتدای قبلی می‌چسبد) */
+ul.menu-left li {
+    margin: 0 15px 0 0; /* فاصله فقط سمت راست */
 }
-ul.menu li a {
+ul.menu-left li a {
     text-decoration: none;
     color: #333;
     font-weight: 500;
     font-size: 1.1rem;
     transition: color 0.2s;
 }
-ul.menu li a:hover {
+ul.menu-left li a:hover {
     color: #007bff;
 }
-ul.menu li a i {
+ul.menu-left li a i {
     margin-right: 5px;
 }
 </style>
 
-<ul class="menu">
+<ul class="menu-left">
     {% for item in site.data.nav.items %}
     <li>
         <a class="page-link" href="{{ item.url | prepend: site.baseurl }}">
