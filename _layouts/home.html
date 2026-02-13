@@ -4,11 +4,7 @@ layout: default
 
 <div class="home">
 
-    <h1>{{ site.course_name }}
-        <span style="font-size: 20px;color: #0006;">
-            / {{ site.course_semester }}
-        </span>
-    </h1>
+    <h1>{{ site.course_name }} <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }} </span></h1>
 
     {% include announcements.html %}
     <br />
@@ -21,100 +17,126 @@ layout: default
     {% if site.data.previous_offering and site.data.previous_offering.offerings and site.data.previous_offering.offerings.size > 0 %}
     <h2>Previous Offerings</h2>
     <ul class="previous-offerings">
-        {% for offer in site.data.previous_offering.offerings %}
-            <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
-        {% endfor %}
+    {% for offer in site.data.previous_offering.offerings %}
+    <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
+    {% endfor %}
     </ul>
     {% endif %}
 
     <br>
 
-    <!-- ===== هرم تیم درس ===== -->
-    <div class="team-pyramid">
+    <!-- ========== هرم تیمی ========== -->
+    <div style="text-align: center; margin-top: 20px;">
 
         {% assign instructors = site.data.people.instructors %}
-        {% assign tas = site.data.people.teaching_assistants %}
+        {% assign all_tas = site.data.people.teaching_assistants %}
+        {% assign head_tas = all_tas | slice:0,2 %}
+        {% assign other_tas = all_tas | slice:2, 999 %}
 
-        {% assign all_people = instructors | concat: tas %}
-        {% assign total = all_people | size %}
+        <!-- ردیف اول: اساتید (نوک هرم) -->
+        <div class="pyramid-row">
+            {% for ins in instructors %}
+            <div class="image--cover-container">
+                <img src="{{ ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                {% if ins.webpage %}
+                    <p><a href="{{ ins.webpage }}">{{ ins.name }}</a></p>
+                {% else %}
+                    <p>{{ ins.name }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- ردیف دوم: head TAها -->
+        {% if head_tas.size > 0 %}
+        <div class="pyramid-row">
+            {% for ta in head_tas %}
+            <div class="image--cover-container">
+                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                {% if ta.webpage %}
+                    <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                {% else %}
+                    <p>{{ ta.name }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- ردیف‌های بعدی: بقیه TAها به صورت هرمی (۱, ۲, ۳, ...) -->
+        {% assign remaining = other_tas %}
+        {% assign total_remaining = remaining | size %}
         {% assign index = 0 %}
+        {% assign row_number = 1 %}
         {% assign max_rows = 20 %}
 
-        {% for row_number in (1..max_rows) %}
-            {% assign remaining = total | minus: index %}
-            {% if remaining > 0 %}
-
+        {% for row in (1..max_rows) %}
+            {% assign remaining_count = total_remaining | minus: index %}
+            {% if remaining_count > 0 %}
                 {% assign row_size = row_number %}
-                {% if remaining < row_number %}
-                    {% assign row_size = remaining %}
+                {% if remaining_count < row_number %}
+                    {% assign row_size = remaining_count %}
                 {% endif %}
 
                 <div class="pyramid-row">
                     {% for i in (1..row_size) %}
-                        {% assign person = all_people[index] %}
-
+                        {% assign ta = remaining[index] %}
                         <div class="image--cover-container">
-                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover">
-
-                            {% if person.webpage %}
-                                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                            {% if ta.webpage %}
+                                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
                             {% else %}
-                                <p>{{ person.name }}</p>
-                            {% endif %}
-
-                            {% if person.role %}
-                                <span class="role-label">{{ person.role }}</span>
+                                <p>{{ ta.name }}</p>
                             {% endif %}
                         </div>
-
                         {% assign index = index | plus: 1 %}
                     {% endfor %}
                 </div>
 
+                {% assign row_number = row_number | plus: 1 %}
             {% endif %}
         {% endfor %}
-
     </div>
-    <!-- ===== پایان ===== -->
+    <!-- ========== پایان هرم ========== -->
 
 </div>
-.team-pyramid {
-    text-align: center;
-    margin-top: 40px;
-}
 
+<style>
+/* استایل‌های مورد نیاز برای هرم */
 .pyramid-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    gap: 15px;
 }
 
 .image--cover-container {
-    width: 120px;
+    width: 130px; /* عرض مناسب برای همه */
+    margin: 0;
     text-align: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .image--cover {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-}
-
-.role-label {
-    display: block;
-    font-size: 0.8em;
-    color: #777;
-    margin-top: 4px;
+    object-fit: cover;
+    margin-bottom: 8px;
 }
 
 @media (max-width: 600px) {
     .image--cover-container {
-        width: 80px;
+        width: 100px;
+        padding: 5px;
     }
-
     .image--cover {
-        height: 80px;
+        width: 70px;
+        height: 70px;
     }
 }
+</style>
