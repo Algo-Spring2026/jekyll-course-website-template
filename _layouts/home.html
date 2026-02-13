@@ -1,101 +1,34 @@
----
-layout: default
----
+<div style="width:65%; float: left">
+    <div class="profile-pic-gallary">
+        <h2>Teaching Assistants</h2>
+        {% assign tas = site.data.people.teaching_assistants %}
+        {% assign total = tas | size %}
+        {% assign index = 0 %}
+        {% assign max_rows = 20 %}  <!-- حداکثر ردیف‌های ممکن (برای ۲۰ TA کافی است) -->
 
-<div class="home">
+        {% for row_number in (1..max_rows) %}
+            {% assign remaining = total | minus: index %}
+            {% if remaining > 0 %}
+                {% assign row_size = row_number %}
+                {% if remaining < row_number %}
+                    {% assign row_size = remaining %}
+                {% endif %}
 
-    <h1>{{ site.course_name }} <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }} </span></h1>
-
-    {% include announcements.html %}
-    <br />
-
-    <h2>Course Description</h2>
-    <p>{{ site.course_description }}</p>
-    
-    {{ content }}
-
-    {% if site.data.previous_offering and site.data.previous_offering.offerings and site.data.previous_offering.offerings.size > 0 %}
-    <h2>Previous Offerings</h2>
-    <ul class="previous-offerings">
-    {% for offer in site.data.previous_offering.offerings %}
-    <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-
-    <br>
-    <div>
-        <div style="width:35%; float: left">
-            <div class="profile-pic-gallary ">
-                <h2>Instructors</h2>
-                {% for ins in site.data.people.instructors %}
-                <div class="image--cover-container">
-                    <img src="{{ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                    {% if ins.webpage %}
-                    <p><a href="{{ ins.webpage }}">{{ins.name}}</a></p>
-                    {% else %}
-                    <p>{{ins.name}}</p>
-                    {% endif %}
+                <div class="pyramid-row">
+                    {% for i in (1..row_size) %}
+                        {% assign ta = tas[index] %}
+                        <div class="image--cover-container">
+                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                            {% if ta.webpage %}
+                                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                            {% else %}
+                                <p>{{ ta.name }}</p>
+                            {% endif %}
+                        </div>
+                        {% assign index = index | plus: 1 %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div style="width:65%; float: left">
-            <div class="profile-pic-gallary">
-                <h2>Teaching Assistants</h2>
-                {% assign tas = site.data.people.teaching_assistants %}
-                {% assign total = tas | size %}
-                {% assign index = 0 %}
-                {% assign row_number = 1 %}
-
-                {% while index < total %}
-                    {% assign remaining = total | minus: index %}
-                    {% assign row_size = row_number %}
-                    {% if remaining < row_number %}
-                        {% assign row_size = remaining %}
-                    {% endif %}
-
-                    <div class="pyramid-row">
-                        {% for i in (1..row_size) %}
-                            {% assign ta = tas[index] %}
-                            <div class="image--cover-container">
-                                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                                {% if ta.webpage %}
-                                    <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                                {% else %}
-                                    <p>{{ ta.name }}</p>
-                                {% endif %}
-                            </div>
-                            {% assign index = index | plus: 1 %}
-                        {% endfor %}
-                    </div>
-
-                    {% assign row_number = row_number | plus: 1 %}
-                {% endwhile %}
-            </div>
-        </div>
+            {% endif %}
+        {% endfor %}
     </div>
 </div>
-<style>
-.pyramid-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 15px;
-    gap: 10px;
-}
-
-.pyramid-row .image--cover-container {
-    width: 120px; /* عرض دلخواه */
-    margin: 0;
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-    .pyramid-row .image--cover-container {
-        width: 80px;
-        font-size: 0.9em;
-    }
-}
-</style>
