@@ -1,48 +1,30 @@
 <style>
-/* ===== استایل نهایی برای چپ‌چین کردن منو ===== */
-nav, .site-nav, .header, .wrapper, .page-content {
-    text-align: left !important;
-    direction: ltr !important;
+ul.menu {
+    display: flex;
+    justify-content: flex-start; 
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
-
-ul.menu-left {
-    display: flex !important;
-    justify-content: flex-start !important;
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    width: 100% !important;
-    float: none !important;
-    clear: both !important;
+ul.menu li {
+    margin: 0 15px 0 0; 
 }
-
-ul.menu-left li {
-    margin: 0 15px 0 0 !important;
-    padding: 0 !important;
-    float: none !important;
-    display: inline-block !important; /* fallback */
+ul.menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: color 0.2s;
 }
-
-ul.menu-left li a {
-    text-decoration: none !important;
-    color: #333 !important;
-    font-weight: 500 !important;
-    font-size: 1.1rem !important;
-    transition: color 0.2s !important;
-    padding: 0 !important;
-    background: none !important;
+ul.menu li a:hover {
+    color: #007bff;
 }
-
-ul.menu-left li a:hover {
-    color: #007bff !important;
-}
-
-ul.menu-left li a i {
-    margin-right: 5px !important;
+ul.menu li a i {
+    margin-right: 5px;
 }
 </style>
 
-<ul class="menu-left">
+<ul class="menu">
     {% for item in site.data.nav.items %}
     <li>
         <a class="page-link" href="{{ item.url | prepend: site.baseurl }}">
