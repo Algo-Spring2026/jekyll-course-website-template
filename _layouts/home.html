@@ -66,36 +66,37 @@ layout: default
         {% endif %}
 
         <!-- ردیف‌های بعدی: بقیه TAها به صورت ردیفی (۴ تایی در هر ردیف) -->
-        {% if other_tas.size > 0 %}
-            <h2 style="margin-top: 30px;">Teaching Assistants</h2>
-            {% assign items_per_row = 4 %} <!-- تعداد آیتم در هر ردیف -->
-            {% assign total_others = other_tas | size %}
-            
-            {% for i in (0..total_others) %}
-                {% assign start_index = i | times: items_per_row %}
-                {% if start_index >= total_others %}
-                    {% break %}
-                {% endif %}
-                
-                <div class="pyramid-row">
-                    {% for j in (0..items_per_row) %}
-                        {% assign item_index = start_index | plus: j %}
-                        {% if item_index < total_others %}
-                            {% assign ta = other_tas[item_index] %}
-                            <div class="image--cover-container">
-                                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                                {% if ta.webpage %}
-                                    <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                                {% else %}
-                                    <p>{{ ta.name }}</p>
-                                {% endif %}
-                            </div>
+        <!-- ردیف‌های بعدی: بقیه TAها به صورت ردیفی (۴ تایی در هر ردیف) -->
+{% if other_tas.size > 0 %}
+    <h2 style="margin-top: 30px;">Teaching Assistants</h2>
+    {% assign items_per_row = 4 %}
+    {% assign total_others = other_tas | size %}
+    {% assign rows_count = total_others | divided_by: items_per_row %}
+    {% assign remainder = total_others | modulo: items_per_row %}
+    {% if remainder > 0 %}
+        {% assign rows_count = rows_count | plus: 1 %}
+    {% endif %}
+
+    {% for row in (1..rows_count) %}
+        {% assign start_index = row | minus: 1 | times: items_per_row %}
+        <div class="pyramid-row">
+            {% for offset in (0..items_per_row) %}
+                {% assign item_index = start_index | plus: offset %}
+                {% if item_index < total_others %}
+                    {% assign ta = other_tas[item_index] %}
+                    <div class="image--cover-container">
+                        <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                        {% if ta.webpage %}
+                            <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                        {% else %}
+                            <p>{{ ta.name }}</p>
                         {% endif %}
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endif %}
             {% endfor %}
-        {% endif %}
-    </div>
+        </div>
+    {% endfor %}
+{% endif %}
     <!-- ========== پایان ========== -->
 
 </div>
