@@ -1,54 +1,50 @@
 <style>
-/* منوی ناوبری - تنظیمات اصلی */
-.site-nav {
-    text-align: center; /* برای مرورگرهای قدیمی */
-    margin: 20px 0;
+/* ===== منوی اصلی با اولویت بالا ===== */
+.site-nav ul.menu {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    list-style: none !important;
+    margin: 20px 0 !important;
+    padding: 0 !important;
+    gap: 25px !important;
 }
 
-ul.menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    gap: 20px; /* فاصله یکسان بین آیتم‌ها */
+.site-nav ul.menu li {
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-ul.menu li {
-    margin: 0; /* حذف حاشیه‌های اضافی */
+.site-nav ul.menu li a {
+    display: inline-block !important;
+    text-decoration: none !important;
+    color: #2c3e50 !important;
+    font-weight: 500 !important;
+    font-size: 1.1rem !important;
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
 }
 
-ul.menu li a {
-    display: inline-block;
-    padding: 8px 12px;
-    text-decoration: none;
-    color: #2c3e50; /* رنگ تیره و حرفه‌ای */
-    font-weight: 500;
-    font-size: 1.1rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+.site-nav ul.menu li a i {
+    margin-right: 6px !important;
+    font-size: 1rem !important;
 }
 
-ul.menu li a i {
-    margin-right: 6px;
-    font-size: 1rem;
+.site-nav ul.menu li a:hover {
+    background-color: #f0f7ff !important;
+    color: #007bff !important;
 }
 
-ul.menu li a:hover {
-    background-color: #f0f7ff;
-    color: #007bff;
-}
-
-/* حالت موبایل: اگر فضای کافی نبود، آیتم‌ها زیر هم قرار گیرند */
+/* واکنش‌گرایی برای موبایل */
 @media (max-width: 600px) {
-    ul.menu {
-        gap: 10px;
+    .site-nav ul.menu {
+        gap: 10px !important;
     }
-    ul.menu li a {
-        font-size: 0.95rem;
-        padding: 6px 8px;
+    .site-nav ul.menu li a {
+        font-size: 0.95rem !important;
+        padding: 6px 8px !important;
     }
 }
 </style>
