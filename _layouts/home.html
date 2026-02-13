@@ -28,8 +28,8 @@ layout: default
     <!-- ===== بخش اساتید و head TAها و بقیه TAها ===== -->
     <div style="text-align: center; margin-top: 20px;">
 
-        <!-- اساتید -->
-        <h2>Instructors</h2>
+        <!-- اساتید با عنوان چپ‌چین -->
+        <h2 style="text-align: left; margin-left: 20px;">Instructors</h2>
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
             {% for ins in site.data.people.instructors %}
             <div class="image--cover-container">
@@ -46,7 +46,7 @@ layout: default
         <!-- دو نفر اول به عنوان head TA (در صورت وجود) -->
         {% assign head_tas = site.data.people.teaching_assistants | slice:0,2 %}
         {% if head_tas.size > 0 %}
-        <h2>Head Teaching Assistants</h2>
+        <h2 style="margin-top: 30px;">Head Teaching Assistants</h2>
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
             {% for ta in head_tas %}
             <div class="image--cover-container">
@@ -64,7 +64,7 @@ layout: default
         <!-- بقیه TAها (از نفر سوم به بعد) با حداکثر ۴ نفر در هر ردیف -->
         {% assign remaining_tas = site.data.people.teaching_assistants | slice:2, 999 %}
         {% if remaining_tas.size > 0 %}
-        <h2>Teaching Assistants</h2>
+        <h2 style="margin-top: 30px;">Teaching Assistants</h2>
         {% assign items_per_row = 4 %}
         {% assign total = remaining_tas | size %}
         {% assign rows = total | divided_by: items_per_row %}
