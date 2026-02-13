@@ -25,7 +25,7 @@ layout: default
 
     <br>
 
-    <!-- ===== بخش اساتید و head TAها ===== -->
+    <!-- ===== بخش اساتید و head TAها و بقیه TAها ===== -->
     <div style="text-align: center; margin-top: 20px;">
 
         <!-- اساتید -->
@@ -47,8 +47,26 @@ layout: default
         {% assign head_tas = site.data.people.teaching_assistants | slice:0,2 %}
         {% if head_tas.size > 0 %}
         <h2>Head Teaching Assistants</h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
             {% for ta in head_tas %}
+            <div class="image--cover-container">
+                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                {% if ta.webpage %}
+                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                {% else %}
+                <p>{{ ta.name }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- بقیه TAها (از نفر سوم به بعد) -->
+        {% assign remaining_tas = site.data.people.teaching_assistants | slice:2, 999 %}
+        {% if remaining_tas.size > 0 %}
+        <h2>Teaching Assistants</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+            {% for ta in remaining_tas %}
             <div class="image--cover-container">
                 <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
                 {% if ta.webpage %}
