@@ -1,3 +1,30 @@
+<style>
+ul.menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+ul.menu li {
+    margin: 0 15px; /* فاصله افقی بین آیتم‌ها */
+}
+ul.menu li a {
+    text-decoration: none;
+    color: #333; /* رنگ دلخواه (می‌توانید بر اساس تم سایت تغییر دهید) */
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+ul.menu li a:hover {
+    color: #007bff; /* رنگ هنگام هاور */
+}
+/* اگر آیکون و متن فاصله نیاز دارند */
+ul.menu li a i {
+    margin-right: 5px;
+}
+</style>
+
 <ul class="menu">
     {% for item in site.data.nav.items %}
     <li>
