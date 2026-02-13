@@ -4,7 +4,9 @@ layout: default
 
 <div class="home">
 
-    <h1>{{ site.course_name }} <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }} </span></h1>
+    <h1>{{ site.course_name }} 
+        <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }}</span>
+    </h1>
 
     {% include announcements.html %}
     <br />
@@ -17,128 +19,125 @@ layout: default
     {% if site.data.previous_offering and site.data.previous_offering.offerings and site.data.previous_offering.offerings.size > 0 %}
     <h2>Previous Offerings</h2>
     <ul class="previous-offerings">
-    {% for offer in site.data.previous_offering.offerings %}
-    <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
-    {% endfor %}
+        {% for offer in site.data.previous_offering.offerings %}
+            <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
+        {% endfor %}
     </ul>
     {% endif %}
 
     <br>
-    <!-- ===== چیدمان جدید هرمی ===== -->
-    <div style="text-align: center; margin-top: 20px;">
 
-        <!-- ردیف اساتید (نوک هرم) -->
-        <h2>Instructors</h2>
-        <div class="pyramid-row instructors-row">
-            {% for ins in site.data.people.instructors %}
-            <div class="image--cover-container instructor-item">
-                <img src="{{ ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                {% if ins.webpage %}
-                <p><a href="{{ ins.webpage }}">{{ ins.name }}</a></p>
-                {% else %}
-                <p>{{ ins.name }}</p>
+    <!-- ===== هرم واحد تیم درس ===== -->
+    <div style="text-align: center; margin-top: 40px;">
+
+        <h2>Course Team</h2>
+
+        {%- comment -%}
+        ترتیب مهم است:
+        1. instructors
+        2. teaching_assistants (فرض بر این است که دو تای اول Head TA هستند)
+        {%- endcomment -%}
+
+        {% assign instructors = site.data.people.instructors %}
+        {% assign tas = site.data.people.teaching_assistants %}
+
+        {% assign head_tas = tas | slice:0,2 %}
+        {% assign normal_tas = tas | slice:2,999 %}
+
+        {% assign step1 = instructors | concat: head_tas %}
+        {% assign all_people = step1 | concat: normal_tas %}
+
+        {% assign total = all_people | size %}
+        {% assign index = 0 %}
+        {% assign max_rows = 20 %}
+
+        {% for row_number in (1..max_rows) %}
+            {% assign remaining = total | minus: index %}
+            {% if remaining > 0 %}
+
+                {% assign row_size = row_number %}
+                {% if remaining < row_number %}
+                    {% assign row_size = remaining %}
                 {% endif %}
-            </div>
-            {% endfor %}
-        </div>
 
-        <!-- ردیف سرگروه‌یاران (دو نفر اول) -->
-        <h2 style="margin-top: 30px;">Head Teaching Assistants</h2>
-        <div class="pyramid-row head-ta-row">
-            {% assign head_tas = site.data.people.teaching_assistants | slice:0,2 %}
-            {% for ta in head_tas %}
-            <div class="image--cover-container head-ta-item">
-                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                {% if ta.webpage %}
-                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                {% else %}
-                <p>{{ ta.name }}</p>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
+                <div class="pyramid-row">
+                    {% for i in (1..row_size) %}
+                        {% assign person = all_people[index] %}
+                        <div class="image--cover-container 
+                            {% if forloop.parentloop.index == 1 %}instructor-size{% endif %}
+                        ">
+                            
+                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover">
 
-        <!-- بقیه TAها به صورت دو ردیف معمولی (نه هرمی) -->
-        <h2 style="margin-top: 30px;">Teaching Assistants</h2>
-        {% assign remaining_tas = site.data.people.teaching_assistants | slice:2, 999 %}
-        {% assign total = remaining_tas | size %}
-        {% if total > 0 %}
-            {% assign half = total | divided_by: 2 %}
-            {% assign remainder = total | modulo: 2 %}
-            {% assign first_row_size = half | plus: remainder %} <!-- ردیف اول بزرگتر اگر تعداد فرد باشد -->
-            {% assign second_row_size = half %}
+                            {% if person.webpage %}
+                                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                            {% else %}
+                                <p>{{ person.name }}</p>
+                            {% endif %}
 
-            <!-- ردیف اول -->
-            <div class="pyramid-row">
-                {% for i in (0..first_row_size-1) %}
-                    {% assign ta = remaining_tas[i] %}
-                    <div class="image--cover-container">
-                        <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                        {% if ta.webpage %}
-                            <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                        {% else %}
-                            <p>{{ ta.name }}</p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
+                            {% if person.role %}
+                                <span class="role-label">{{ person.role }}</span>
+                            {% endif %}
 
-            <!-- ردیف دوم (اگر وجود داشته باشد) -->
-            {% if second_row_size > 0 %}
-            <div class="pyramid-row">
-                {% for i in (first_row_size..total-1) %}
-                    {% assign ta = remaining_tas[i] %}
-                    <div class="image--cover-container">
-                        <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                        {% if ta.webpage %}
-                            <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                        {% else %}
-                            <p>{{ ta.name }}</p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
+                        </div>
+                        {% assign index = index | plus: 1 %}
+                    {% endfor %}
+                </div>
+
             {% endif %}
-        {% endif %}
+        {% endfor %}
+
     </div>
-    <!-- ===== پایان چیدمان جدید ===== -->
+    <!-- ===== پایان هرم ===== -->
+
 </div>
+
 
 <style>
 .pyramid-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 15px;
-    gap: 10px;
+    margin-bottom: 20px;
+    gap: 15px;
 }
 
-.pyramid-row .image--cover-container {
-    width: 120px; /* عرض پایه برای TAهای عادی */
-    margin: 0;
+.image--cover-container {
+    width: 120px;
     text-align: center;
 }
 
-/* اساتید بزرگتر */
-.instructors-row .image--cover-container {
+.image--cover {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.role-label {
+    display: block;
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* اساتید بزرگ‌تر */
+.pyramid-row:first-child .image--cover-container {
     width: 150px;
 }
 
-/* سرگروه‌یاران کمی بزرگتر از بقیه */
-.head-ta-row .image--cover-container {
-    width: 130px;
+.pyramid-row:nth-child(2) .image--cover-container {
+    width: 135px;
 }
 
 @media (max-width: 600px) {
-    .pyramid-row .image--cover-container {
+    .image--cover-container {
         width: 80px;
         font-size: 0.9em;
     }
-    .instructors-row .image--cover-container {
-        width: 100px;
-    }
-    .head-ta-row .image--cover-container {
-        width: 90px;
+
+    .image--cover {
+        height: 80px;
     }
 }
 </style>
