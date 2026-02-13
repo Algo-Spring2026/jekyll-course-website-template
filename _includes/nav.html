@@ -1,14 +1,20 @@
 <style>
-/* ===== منوی اصلی با اولویت بالا ===== */
+/* ===== روش اول: Flexbox (ترجیحی) ===== */
+.site-nav {
+    text-align: center; /* پشتیبان برای مرورگرهای خیلی قدیمی */
+    width: 100%;
+    margin: 15px 0;
+}
+
 .site-nav ul.menu {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     flex-wrap: wrap !important;
     list-style: none !important;
-    margin: 20px 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
-    gap: 25px !important;
+    gap: 20px 30px !important; /* فاصله افقی و عمودی */
 }
 
 .site-nav ul.menu li {
@@ -22,8 +28,8 @@
     color: #2c3e50 !important;
     font-weight: 500 !important;
     font-size: 1.1rem !important;
-    padding: 8px 12px !important;
-    border-radius: 4px !important;
+    padding: 8px 0 !important; /* فقط فاصله عمودی، فاصله افقی توسط gap تأمین می‌شود */
+    border-bottom: 2px solid transparent !important;
     transition: all 0.2s ease !important;
 }
 
@@ -33,20 +39,40 @@
 }
 
 .site-nav ul.menu li a:hover {
-    background-color: #f0f7ff !important;
+    border-bottom-color: #007bff !important;
     color: #007bff !important;
 }
 
 /* واکنش‌گرایی برای موبایل */
 @media (max-width: 600px) {
     .site-nav ul.menu {
-        gap: 10px !important;
+        gap: 12px !important;
     }
     .site-nav ul.menu li a {
         font-size: 0.95rem !important;
-        padding: 6px 8px !important;
+        padding: 5px 0 !important;
     }
 }
+
+/* ===== روش دوم (کلاسیک) - فقط در صورتی که flex کار نکرد، این بخش را فعال کنید ===== */
+/* 
+.site-nav ul.menu {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+}
+.site-nav ul.menu li {
+    display: inline-block !important;
+    margin: 0 10px !important;
+}
+.site-nav ul.menu li a {
+    display: inline-block !important;
+    padding: 8px 12px !important;
+    text-decoration: none !important;
+    color: #2c3e50 !important;
+}
+*/
 </style>
 
 <nav class="site-nav">
