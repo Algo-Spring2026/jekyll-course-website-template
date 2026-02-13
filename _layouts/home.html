@@ -61,22 +61,37 @@ layout: default
         </div>
         {% endif %}
 
-        <!-- بقیه TAها (از نفر سوم به بعد) -->
+        <!-- بقیه TAها (از نفر سوم به بعد) با حداکثر ۴ نفر در هر ردیف -->
         {% assign remaining_tas = site.data.people.teaching_assistants | slice:2, 999 %}
         {% if remaining_tas.size > 0 %}
         <h2>Teaching Assistants</h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-            {% for ta in remaining_tas %}
-            <div class="image--cover-container">
-                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                {% if ta.webpage %}
-                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                {% else %}
-                <p>{{ ta.name }}</p>
-                {% endif %}
+        {% assign items_per_row = 4 %}
+        {% assign total = remaining_tas | size %}
+        {% assign rows = total | divided_by: items_per_row %}
+        {% assign remainder = total | modulo: items_per_row %}
+        {% if remainder > 0 %}
+            {% assign rows = rows | plus: 1 %}
+        {% endif %}
+
+        {% for row in (1..rows) %}
+            {% assign start_index = row | minus: 1 | times: items_per_row %}
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                {% for offset in (0..items_per_row) %}
+                    {% assign index = start_index | plus: offset %}
+                    {% if index < total %}
+                        {% assign ta = remaining_tas[index] %}
+                        <div class="image--cover-container">
+                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                            {% if ta.webpage %}
+                            <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                            {% else %}
+                            <p>{{ ta.name }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
+        {% endfor %}
         {% endif %}
 
     </div>
