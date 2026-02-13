@@ -25,7 +25,7 @@ layout: default
 
     <br>
 
-    <!-- ========== هرم تیمی ========== -->
+    <!-- ========== هرم و ردیف‌ها ========== -->
     <div style="text-align: center; margin-top: 20px;">
 
         {% assign instructors = site.data.people.instructors %}
@@ -63,46 +63,42 @@ layout: default
         </div>
         {% endif %}
 
-        <!-- ردیف‌های بعدی: بقیه TAها به صورت هرمی (۱, ۲, ۳, ...) -->
-        {% assign remaining = other_tas %}
-        {% assign total_remaining = remaining | size %}
-        {% assign index = 0 %}
-        {% assign row_number = 1 %}
-        {% assign max_rows = 20 %}
-
-        {% for row in (1..max_rows) %}
-            {% assign remaining_count = total_remaining | minus: index %}
-            {% if remaining_count > 0 %}
-                {% assign row_size = row_number %}
-                {% if remaining_count < row_number %}
-                    {% assign row_size = remaining_count %}
+        <!-- ردیف‌های بعدی: بقیه TAها به صورت ردیفی (۳ یا ۴ تایی در هر ردیف) -->
+        {% if other_tas.size > 0 %}
+            <h2 style="margin: 30px 0 15px;">Teaching Assistants</h2>
+            {% assign items_per_row = 4 %} <!-- تعداد آیتم در هر ردیف -->
+            {% assign total_others = other_tas | size %}
+            
+            {% for i in (0..total_others) %}
+                {% assign start_index = i | times: items_per_row %}
+                {% if start_index >= total_others %}
+                    {% break %}
                 {% endif %}
-
+                
                 <div class="pyramid-row">
-                    {% for i in (1..row_size) %}
-                        {% assign ta = remaining[index] %}
-                        <div class="image--cover-container">
-                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                            {% if ta.webpage %}
-                                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                            {% else %}
-                                <p>{{ ta.name }}</p>
-                            {% endif %}
-                        </div>
-                        {% assign index = index | plus: 1 %}
+                    {% for j in (0..items_per_row) %}
+                        {% assign item_index = start_index | plus: j %}
+                        {% if item_index < total_others %}
+                            {% assign ta = other_tas[item_index] %}
+                            <div class="image--cover-container">
+                                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                                {% if ta.webpage %}
+                                    <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                                {% else %}
+                                    <p>{{ ta.name }}</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
-
-                {% assign row_number = row_number | plus: 1 %}
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
     </div>
-    <!-- ========== پایان هرم ========== -->
+    <!-- ========== پایان ========== -->
 
 </div>
 
 <style>
-/* استایل‌های مورد نیاز برای هرم */
 .pyramid-row {
     display: flex;
     flex-wrap: wrap;
@@ -112,7 +108,7 @@ layout: default
 }
 
 .image--cover-container {
-    width: 130px; /* عرض مناسب برای همه */
+    width: 130px;
     margin: 0;
     text-align: center;
     background: #f9f9f9;
