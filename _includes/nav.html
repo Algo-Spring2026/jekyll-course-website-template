@@ -1,25 +1,24 @@
 <style>
 ul.menu {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* چپ‌چین */
     list-style: none;
     padding: 0;
     margin: 0;
 }
 ul.menu li {
-    margin: 0 15px; /* فاصله افقی بین آیتم‌ها */
+    margin: 0 15px 0 0; /* فاصله فقط از راست (چپ هر آیتم به ابتدای قبلی می‌چسبد) */
 }
 ul.menu li a {
     text-decoration: none;
-    color: #333; /* رنگ دلخواه (می‌توانید بر اساس تم سایت تغییر دهید) */
+    color: #333;
     font-weight: 500;
     font-size: 1.1rem;
     transition: color 0.2s;
 }
 ul.menu li a:hover {
-    color: #007bff; /* رنگ هنگام هاور */
+    color: #007bff;
 }
-/* اگر آیکون و متن فاصله نیاز دارند */
 ul.menu li a i {
     margin-right: 5px;
 }
