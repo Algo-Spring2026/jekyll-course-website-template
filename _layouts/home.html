@@ -26,12 +26,6 @@ layout: default
     <br>
     <div>
         <div style="width:35%; float: left">
-            <!-- <h2>Instructors</h2> -->
-            <!-- <div class="image--cover-container">
-                <img src="{{site.data.people.instructor.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                <p>{{site.data.people.instructor.name}}</p>
-            </div> -->
-
             <div class="profile-pic-gallary ">
                 <h2>Instructors</h2>
                 {% for ins in site.data.people.instructors %}
@@ -48,18 +42,37 @@ layout: default
         </div>
 
         <div style="width:65%; float: left">
-            <div class="profile-pic-gallary ">
+            <div class="profile-pic-gallary">
                 <h2>Teaching Assistants</h2>
-                {% for ta in site.data.people.teaching_assistants %}
-                <div class="image--cover-container">
-                    <img src="{{ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                    {% if ta.webpage %}
-                    <p><a href="{{ ta.webpage }}">{{ta.name}}</a></p>
-                    {% else %}
-                    <p>{{ta.name}}</p>
+                {% assign tas = site.data.people.teaching_assistants %}
+                {% assign total = tas | size %}
+                {% assign index = 0 %}
+                {% assign row_number = 1 %}
+
+                {% while index < total %}
+                    {% assign remaining = total | minus: index %}
+                    {% assign row_size = row_number %}
+                    {% if remaining < row_number %}
+                        {% assign row_size = remaining %}
                     {% endif %}
-                </div>
-                {% endfor %}
+
+                    <div class="pyramid-row">
+                        {% for i in (1..row_size) %}
+                            {% assign ta = tas[index] %}
+                            <div class="image--cover-container">
+                                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                                {% if ta.webpage %}
+                                    <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                                {% else %}
+                                    <p>{{ ta.name }}</p>
+                                {% endif %}
+                            </div>
+                            {% assign index = index | plus: 1 %}
+                        {% endfor %}
+                    </div>
+
+                    {% assign row_number = row_number | plus: 1 %}
+                {% endwhile %}
             </div>
         </div>
     </div>
