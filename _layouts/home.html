@@ -5,7 +5,9 @@ layout: default
 <div class="home">
 
     <h1>{{ site.course_name }} 
-        <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }}</span>
+        <span style="font-size: 20px;color: #0006;">
+            / {{ site.course_semester }}
+        </span>
     </h1>
 
     {% include announcements.html %}
@@ -27,27 +29,55 @@ layout: default
 
     <br>
 
-    <!-- ===== هرم واحد تیم درس ===== -->
-    <div style="text-align: center; margin-top: 40px;">
+    <!-- ===== چیدمان هرمی ===== -->
+    <div style="text-align: center; margin-top: 20px;">
 
-        <h2>Course Team</h2>
+        <!-- Instructors -->
+        <h2>Instructors</h2>
+        <div class="pyramid-row instructors-row">
+            {% for ins in site.data.people.instructors %}
+            <div class="image--cover-container instructor-item">
+                <img src="{{ ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
 
-        {%- comment -%}
-        ترتیب مهم است:
-        1. instructors
-        2. teaching_assistants (فرض بر این است که دو تای اول Head TA هستند)
-        {%- endcomment -%}
+                {% if ins.webpage %}
+                <p><a href="{{ ins.webpage }}">{{ ins.name }}</a></p>
+                {% else %}
+                <p>{{ ins.name }}</p>
+                {% endif %}
 
-        {% assign instructors = site.data.people.instructors %}
-        {% assign tas = site.data.people.teaching_assistants %}
+                {% if ins.role %}
+                <span class="role-label">{{ ins.role }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
 
-        {% assign head_tas = tas | slice:0,2 %}
-        {% assign normal_tas = tas | slice:2,999 %}
+        <!-- Head TAs -->
+        <h2 style="margin-top: 30px;">Head Teaching Assistants</h2>
+        <div class="pyramid-row head-ta-row">
+            {% assign head_tas = site.data.people.teaching_assistants | slice:0,2 %}
+            {% for ta in head_tas %}
+            <div class="image--cover-container head-ta-item">
+                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
 
-        {% assign step1 = instructors | concat: head_tas %}
-        {% assign all_people = step1 | concat: normal_tas %}
+                {% if ta.webpage %}
+                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                {% else %}
+                <p>{{ ta.name }}</p>
+                {% endif %}
 
-        {% assign total = all_people | size %}
+                {% if ta.role %}
+                <span class="role-label">{{ ta.role }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Teaching Assistants -->
+        <h2 style="margin-top: 30px;">Teaching Assistants</h2>
+
+        {% assign remaining_tas = site.data.people.teaching_assistants | slice:2,999 %}
+        {% assign total = remaining_tas | size %}
         {% assign index = 0 %}
         {% assign max_rows = 20 %}
 
@@ -62,24 +92,21 @@ layout: default
 
                 <div class="pyramid-row">
                     {% for i in (1..row_size) %}
-                        {% assign person = all_people[index] %}
-                        <div class="image--cover-container 
-                            {% if forloop.parentloop.index == 1 %}instructor-size{% endif %}
-                        ">
-                            
-                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                        {% assign ta = remaining_tas[index] %}
+                        <div class="image--cover-container">
+                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
 
-                            {% if person.webpage %}
-                                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                            {% if ta.webpage %}
+                            <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
                             {% else %}
-                                <p>{{ person.name }}</p>
+                            <p>{{ ta.name }}</p>
                             {% endif %}
 
-                            {% if person.role %}
-                                <span class="role-label">{{ person.role }}</span>
+                            {% if ta.role %}
+                            <span class="role-label">{{ ta.role }}</span>
                             {% endif %}
-
                         </div>
+
                         {% assign index = index | plus: 1 %}
                     {% endfor %}
                 </div>
@@ -88,7 +115,7 @@ layout: default
         {% endfor %}
 
     </div>
-    <!-- ===== پایان هرم ===== -->
+    <!-- ===== پایان ===== -->
 
 </div>
 
@@ -98,11 +125,11 @@ layout: default
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 20px;
-    gap: 15px;
+    margin-bottom: 15px;
+    gap: 10px;
 }
 
-.image--cover-container {
+.pyramid-row .image--cover-container {
     width: 120px;
     text-align: center;
 }
@@ -111,33 +138,42 @@ layout: default
     width: 100%;
     height: 120px;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 50%;
+}
+
+/* Instructors بزرگ‌تر */
+.instructors-row .image--cover-container {
+    width: 150px;
+}
+
+/* Head TA کمی بزرگ‌تر */
+.head-ta-row .image--cover-container {
+    width: 130px;
 }
 
 .role-label {
     display: block;
-    font-size: 0.85em;
-    color: #666;
+    font-size: 0.8em;
+    color: #777;
     margin-top: 4px;
 }
 
-/* اساتید بزرگ‌تر */
-.pyramid-row:first-child .image--cover-container {
-    width: 150px;
-}
-
-.pyramid-row:nth-child(2) .image--cover-container {
-    width: 135px;
-}
-
 @media (max-width: 600px) {
-    .image--cover-container {
+    .pyramid-row .image--cover-container {
         width: 80px;
         font-size: 0.9em;
     }
 
     .image--cover {
         height: 80px;
+    }
+
+    .instructors-row .image--cover-container {
+        width: 100px;
+    }
+
+    .head-ta-row .image--cover-container {
+        width: 90px;
     }
 }
 </style>
