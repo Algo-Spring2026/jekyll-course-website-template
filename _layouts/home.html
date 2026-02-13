@@ -4,63 +4,77 @@ layout: default
 
 <div class="home">
 
-    <h1>{{ site.course_name }} <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }} </span></h1>
+    <h1>{{ site.course_name }}
+        <span style="font-size: 20px;color: #0006;">
+            / {{ site.course_semester }}
+        </span>
+    </h1>
 
     {% include announcements.html %}
     <br />
 
     <h2>Course Description</h2>
     <p>{{ site.course_description }}</p>
-    
+
     {{ content }}
 
     {% if site.data.previous_offering and site.data.previous_offering.offerings and site.data.previous_offering.offerings.size > 0 %}
     <h2>Previous Offerings</h2>
     <ul class="previous-offerings">
-    {% for offer in site.data.previous_offering.offerings %}
-    <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
-    {% endfor %}
+        {% for offer in site.data.previous_offering.offerings %}
+            <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
+        {% endfor %}
     </ul>
     {% endif %}
 
     <br>
-    <div>
-        <div style="width:35%; float: left">
-            <!-- <h2>Instructors</h2> -->
-            <!-- <div class="image--cover-container">
-                <img src="{{site.data.people.instructor.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                <p>{{site.data.people.instructor.name}}</p>
-            </div> -->
 
-            <div class="profile-pic-gallary ">
-                <h2>Instructors</h2>
-                {% for ins in site.data.people.instructors %}
-                <div class="image--cover-container">
-                    <img src="{{ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                    {% if ins.webpage %}
-                    <p><a href="{{ ins.webpage }}">{{ins.name}}</a></p>
-                    {% else %}
-                    <p>{{ins.name}}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+    <!-- ===== هرم تیم درس ===== -->
+    <div class="team-pyramid">
 
-        <div style="width:65%; float: left">
-            <div class="profile-pic-gallary ">
-                <h2>Teaching Assistants</h2>
-                {% for ta in site.data.people.teaching_assistants %}
-                <div class="image--cover-container">
-                    <img src="{{ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                    {% if ta.webpage %}
-                    <p><a href="{{ ta.webpage }}">{{ta.name}}</a></p>
-                    {% else %}
-                    <p>{{ta.name}}</p>
-                    {% endif %}
+        {% assign instructors = site.data.people.instructors %}
+        {% assign tas = site.data.people.teaching_assistants %}
+
+        {% assign all_people = instructors | concat: tas %}
+        {% assign total = all_people | size %}
+        {% assign index = 0 %}
+        {% assign max_rows = 20 %}
+
+        {% for row_number in (1..max_rows) %}
+            {% assign remaining = total | minus: index %}
+            {% if remaining > 0 %}
+
+                {% assign row_size = row_number %}
+                {% if remaining < row_number %}
+                    {% assign row_size = remaining %}
+                {% endif %}
+
+                <div class="pyramid-row">
+                    {% for i in (1..row_size) %}
+                        {% assign person = all_people[index] %}
+
+                        <div class="image--cover-container">
+                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover">
+
+                            {% if person.webpage %}
+                                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                            {% else %}
+                                <p>{{ person.name }}</p>
+                            {% endif %}
+
+                            {% if person.role %}
+                                <span class="role-label">{{ person.role }}</span>
+                            {% endif %}
+                        </div>
+
+                        {% assign index = index | plus: 1 %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        </div>
+
+            {% endif %}
+        {% endfor %}
+
     </div>
+    <!-- ===== پایان ===== -->
+
 </div>
