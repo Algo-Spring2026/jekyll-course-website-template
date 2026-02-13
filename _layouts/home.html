@@ -77,3 +77,25 @@ layout: default
         </div>
     </div>
 </div>
+<style>
+.pyramid-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.pyramid-row .image--cover-container {
+    width: 120px; /* عرض دلخواه */
+    margin: 0;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .pyramid-row .image--cover-container {
+        width: 80px;
+        font-size: 0.9em;
+    }
+}
+</style>
