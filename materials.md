@@ -3,7 +3,7 @@ layout: page
 title: Materials
 permalink: /materials/
 ---
-<div style="margin-top: 40px;"></div>
+<div style="margin-top: 100px;"></div>
 
 {% include image.html url="/_images/screenshots/image.png.jpeg" width=175 align="right" %}
 
