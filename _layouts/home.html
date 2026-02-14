@@ -1,150 +1,65 @@
----
-layout: default
----
+<div style="text-align: center; margin-top: 20px;">
+    <h2>Course Team</h2>
 
-<div class="home">
-
-    <h1>{{ site.course_name }} <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }} </span></h1>
-
-    {% include announcements.html %}
-    <br />
-
-    <h2>Course Description</h2>
-    <p>{{ site.course_description }}</p>
+    {% assign instructors = site.data.people.instructors %}
+    {% assign all_tas = site.data.people.teaching_assistants %}
+    {% assign all_people = instructors | concat: all_tas %}
+    {% assign total = all_people | size %}
     
-    {{ content }}
-
-    {% if site.data.previous_offering and site.data.previous_offering.offerings and site.data.previous_offering.offerings.size > 0 %}
-    <h2>Previous Offerings</h2>
-    <ul class="previous-offerings">
-    {% for offer in site.data.previous_offering.offerings %}
-    <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
-    {% endfor %}
-    </ul>
+    {% assign instructors_count = instructors | size %}
+    {% assign tas_count = all_tas | size %}
+   
+    {% assign head_count = tas_count %}
+    {% if head_count > 2 %}
+        {% assign head_count = 2 %}
     {% endif %}
-
-    <br>
-
-
-    <div style="text-align: center; margin-top: 20px;">
-        <h2>Course Team</h2>
-
-        {% assign instructors = site.data.people.instructors %}
-        {% assign all_tas = site.data.people.teaching_assistants %}
-        {% assign all_people = instructors | concat: all_tas %}
-        {% assign total = all_people | size %}
-        
-        {% assign instructors_count = instructors | size %}
-        {% assign head_count = all_tas | size | at_least: 0 | at_most: 2 %}
-        
-        {% assign index = 0 %}
-        {% assign row_number = 1 %}
-        {% assign max_rows = 20 %}
-
-        {% for row in (1..max_rows) %}
-            {% assign remaining = total | minus: index %}
-            {% if remaining <= 0 %}
-                {% break %}
-            {% endif %}
-
-            {% assign row_size = row_number %}
-            {% if remaining < row_number %}
-                {% assign row_size = remaining %}
-            {% endif %}
-
-            <div class="pyramid-row">
-                {% for i in (1..row_size) %}
-                    {% assign person = all_people[index] %}
-                    
-                    
-                    {% if index < instructors_count %}
-                        {% assign role = "INSTRUCTOR" %}
-                    {% elsif index < instructors_count | plus: head_count %}
-                        {% assign role = "HEAD TA" %}
-                    {% else %}
-                        {% assign role = "TA" %}
-                    {% endif %}
-                    
-                    <div class="image--cover-container">
-                        <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
-                        {% if person.webpage %}
-                            <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
-                        {% else %}
-                            <p>{{ person.name }}</p>
-                        {% endif %}
-                        <span class="role-badge role-{{ role | slugify }}">{{ role }}</span>
-                    </div>
-                    
-                    {% assign index = index | plus: 1 %}
-                {% endfor %}
-            </div>
-
-            {% assign row_number = row_number | plus: 1 %}
-        {% endfor %}
-    </div>
     
+    
+    {% assign instructors_end = instructors_count %}
+    {% assign head_end = instructors_end | plus: head_count %}
+    
+    {% assign index = 0 %}
+    {% assign row_number = 1 %}
+    {% assign max_rows = 20 %}
 
+    {% for row in (1..max_rows) %}
+        {% assign remaining = total | minus: index %}
+        {% if remaining <= 0 %}
+            {% break %}
+        {% endif %}
+
+        {% assign row_size = row_number %}
+        {% if remaining < row_number %}
+            {% assign row_size = remaining %}
+        {% endif %}
+
+        <div class="pyramid-row">
+            {% for i in (1..row_size) %}
+                {% assign person = all_people[index] %}
+                
+                
+                {% if index < instructors_end %}
+                    {% assign role = "INSTRUCTOR" %}
+                {% elsif index < head_end %}
+                    {% assign role = "HEAD TA" %}
+                {% else %}
+                    {% assign role = "TA" %}
+                {% endif %}
+                
+                <div class="image--cover-container">
+                    <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
+                    {% if person.webpage %}
+                        <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                    {% else %}
+                        <p>{{ person.name }}</p>
+                    {% endif %}
+                    <span class="role-badge role-{{ role | slugify }}">{{ role }}</span>
+                </div>
+                
+                {% assign index = index | plus: 1 %}
+            {% endfor %}
+        </div>
+
+        {% assign row_number = row_number | plus: 1 %}
+    {% endfor %}
 </div>
-
-<style>
-.pyramid-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
-    gap: 15px;
-}
-
-.image--cover-container {
-    width: 130px;
-    margin: 0;
-    text-align: center;
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: 10px 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: relative;
-}
-
-.image--cover {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 8px;
-}
-
-.role-badge {
-    display: inline-block;
-    font-size: 0.7em;
-    font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 12px;
-    color: white;
-    margin-top: 5px;
-    text-transform: uppercase;
-}
-
-.role-instructor {
-    background-color: #2c3e50;
-}
-
-.role-head-ta {
-    background-color: #16a085;
-}
-
-.role-ta {
-    background-color: #7f8c8d;
-}
-
-@media (max-width: 600px) {
-    .image--cover-container {
-        width: 100px;
-        padding: 5px;
-    }
-    .image--cover {
-        width: 70px;
-        height: 70px;
-    }
-}
-</style>
