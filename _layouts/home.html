@@ -62,11 +62,11 @@ layout: default
         {% endif %}
 
         <!-- بقیه TAها (از نفر سوم به بعد) با حداکثر ۳ نفر در هر ردیف -->
-        {% assign remaining_tas = site.data.people.teaching_assistants | slice:2, 999 %}
-        {% if remaining_tas.size > 0 %}
+        {% assign other_tas = site.data.people.teaching_assistants | slice:2, 999 %}
+        {% if other_tas.size > 0 %}
         <h2 style="margin-top: 30px;">Teaching Assistants</h2>
         {% assign items_per_row = 3 %}
-        {% assign total = remaining_tas | size %}
+        {% assign total = other_tas | size %}
         {% assign rows = total | divided_by: items_per_row %}
         {% assign remainder = total | modulo: items_per_row %}
         {% if remainder > 0 %}
@@ -79,7 +79,7 @@ layout: default
                 {% for offset in (0..items_per_row-1) %}
                     {% assign index = start_index | plus: offset %}
                     {% if index < total %}
-                        {% assign ta = remaining_tas[index] %}
+                        {% assign ta = other_tas[index] %}
                         <div class="image--cover-container">
                             <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
                             {% if ta.webpage %}
