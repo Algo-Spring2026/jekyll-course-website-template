@@ -9,9 +9,7 @@ permalink: /materials/
 
 Algorithm Desigin - Spring 2026 - Dr. Eskandari
 [Download full textbook (PDF)](/static_files/presentations/algorithms_spring2026.pdf)
-
 ---
-<div style="margin-top: 20px;"></div>
 ## Similar Courses
 
 * [CS161 2013](https://web.stanford.edu/class/archive/cs/cs161/cs161.1138/) - Stanford University
