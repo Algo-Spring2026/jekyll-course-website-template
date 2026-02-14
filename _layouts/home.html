@@ -25,14 +25,18 @@ layout: default
 
     <br>
 
-    <!-- ===== هرم تیمی ===== -->
+
     <div style="text-align: center; margin-top: 20px;">
-        <h2>Instructor</h2>
+        <h2>Course Team</h2>
 
         {% assign instructors = site.data.people.instructors %}
         {% assign all_tas = site.data.people.teaching_assistants %}
         {% assign all_people = instructors | concat: all_tas %}
         {% assign total = all_people | size %}
+        
+        {% assign instructors_count = instructors | size %}
+        {% assign head_count = all_tas | size | at_least: 0 | at_most: 2 %}
+        
         {% assign index = 0 %}
         {% assign row_number = 1 %}
         {% assign max_rows = 20 %}
@@ -51,14 +55,26 @@ layout: default
             <div class="pyramid-row">
                 {% for i in (1..row_size) %}
                     {% assign person = all_people[index] %}
+                    
+                    
+                    {% if index < instructors_count %}
+                        {% assign role = "INSTRUCTOR" %}
+                    {% elsif index < instructors_count | plus: head_count %}
+                        {% assign role = "HEAD TA" %}
+                    {% else %}
+                        {% assign role = "TA" %}
+                    {% endif %}
+                    
                     <div class="image--cover-container">
-                        <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                        <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
                         {% if person.webpage %}
                             <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
                         {% else %}
                             <p>{{ person.name }}</p>
                         {% endif %}
+                        <span class="role-badge role-{{ role | slugify }}">{{ role }}</span>
                     </div>
+                    
                     {% assign index = index | plus: 1 %}
                 {% endfor %}
             </div>
@@ -66,7 +82,7 @@ layout: default
             {% assign row_number = row_number | plus: 1 %}
         {% endfor %}
     </div>
-    <!-- ===== پایان هرم ===== -->
+    
 
 </div>
 
@@ -87,6 +103,7 @@ layout: default
     border-radius: 8px;
     padding: 10px 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
 }
 
 .image--cover {
@@ -95,6 +112,29 @@ layout: default
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 8px;
+}
+
+.role-badge {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: white;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
+.role-instructor {
+    background-color: #2c3e50;
+}
+
+.role-head-ta {
+    background-color: #16a085;
+}
+
+.role-ta {
+    background-color: #7f8c8d;
 }
 
 @media (max-width: 600px) {
