@@ -4,90 +4,107 @@ layout: default
 
 <div class="home">
 
-    <h1>{{ site.course_name }}
-        <span style="font-size: 20px;color: #0006;">
-            / {{ site.course_semester }}
-        </span>
-    </h1>
+    <h1>{{ site.course_name }} <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }} </span></h1>
 
     {% include announcements.html %}
     <br />
 
     <h2>Course Description</h2>
     <p>{{ site.course_description }}</p>
-
+    
     {{ content }}
 
     {% if site.data.previous_offering and site.data.previous_offering.offerings and site.data.previous_offering.offerings.size > 0 %}
     <h2>Previous Offerings</h2>
     <ul class="previous-offerings">
-        {% for offer in site.data.previous_offering.offerings %}
-        <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
-        {% endfor %}
+    {% for offer in site.data.previous_offering.offerings %}
+    <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
+    {% endfor %}
     </ul>
     {% endif %}
 
     <br>
 
-    <!-- ===== Instructors ===== -->
-    <div style="text-align:center; margin-bottom:40px;">
-        <h2>Instructors</h2>
+    <!-- ===== هرم تیمی ===== -->
+    <div style="text-align: center; margin-top: 20px;">
+        <h2>Course Team</h2>
 
-        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:20px;">
-            {% for ins in site.data.people.instructors %}
-            <div class="image--cover-container">
-                <img src="{{ ins.profile_pic | prepend: site.baseurl }}" class="image--cover">
-
-                {% if ins.webpage %}
-                <p><a href="{{ ins.webpage }}">{{ ins.name }}</a></p>
-                {% else %}
-                <p>{{ ins.name }}</p>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- ===== Teaching Assistants (Triangular Layout) ===== -->
-    <div style="text-align:center;">
-
-        <h2>Teaching Assistants</h2>
-
-        {% assign tas = site.data.people.teaching_assistants %}
-        {% assign total = tas | size %}
+        {% assign instructors = site.data.people.instructors %}
+        {% assign all_tas = site.data.people.teaching_assistants %}
+        {% assign all_people = instructors | concat: all_tas %}
+        {% assign total = all_people | size %}
         {% assign index = 0 %}
+        {% assign row_number = 1 %}
         {% assign max_rows = 20 %}
 
-        {% for row_number in (1..max_rows) %}
+        {% for row in (1..max_rows) %}
             {% assign remaining = total | minus: index %}
-            {% if remaining > 0 %}
-
-                {% assign row_size = row_number %}
-                {% if remaining < row_number %}
-                    {% assign row_size = remaining %}
-                {% endif %}
-
-                <div style="text-align:center; margin-bottom:25px;">
-                    {% for i in (1..row_size) %}
-                        {% assign ta = tas[index] %}
-
-                        <div class="image--cover-container" style="display:inline-block; margin:15px;">
-                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-
-                            {% if ta.webpage %}
-                            <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                            {% else %}
-                            <p>{{ ta.name }}</p>
-                            {% endif %}
-                        </div>
-
-                        {% assign index = index | plus: 1 %}
-                    {% endfor %}
-                </div>
-
+            {% if remaining <= 0 %}
+                {% break %}
             {% endif %}
-        {% endfor %}
 
+            {% assign row_size = row_number %}
+            {% if remaining < row_number %}
+                {% assign row_size = remaining %}
+            {% endif %}
+
+            <div class="pyramid-row">
+                {% for i in (1..row_size) %}
+                    {% assign person = all_people[index] %}
+                    <div class="image--cover-container">
+                        <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                        {% if person.webpage %}
+                            <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                        {% else %}
+                            <p>{{ person.name }}</p>
+                        {% endif %}
+                    </div>
+                    {% assign index = index | plus: 1 %}
+                {% endfor %}
+            </div>
+
+            {% assign row_number = row_number | plus: 1 %}
+        {% endfor %}
     </div>
+    <!-- ===== پایان هرم ===== -->
 
 </div>
+
+<style>
+.pyramid-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.image--cover-container {
+    width: 130px;
+    margin: 0;
+    text-align: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.image--cover {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+    .image--cover-container {
+        width: 100px;
+        padding: 5px;
+    }
+    .image--cover {
+        width: 70px;
+        height: 70px;
+    }
+}
+</style>
