@@ -46,7 +46,7 @@ layout: default
         <!-- دو نفر اول به عنوان head TA (در صورت وجود) -->
         {% assign head_tas = site.data.people.teaching_assistants | slice:0,2 %}
         {% if head_tas.size > 0 %}
-        <h2 style="margin-top: 30px;">Head Teaching Assistants</h2>
+        <h2>Head Teaching Assistants</h2>
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
             {% for ta in head_tas %}
             <div class="image--cover-container">
@@ -61,37 +61,22 @@ layout: default
         </div>
         {% endif %}
 
-        <!-- بقیه TAها (از نفر سوم به بعد) با حداکثر ۳ نفر در هر ردیف -->
-        {% assign other_tas = site.data.people.teaching_assistants | slice:2, 999 %}
-        {% if other_tas.size > 0 %}
-        <h2 style="margin-top: 30px;">Teaching Assistants</h2>
-        {% assign items_per_row = 3 %}
-        {% assign total = other_tas | size %}
-        {% assign rows = total | divided_by: items_per_row %}
-        {% assign remainder = total | modulo: items_per_row %}
-        {% if remainder > 0 %}
-            {% assign rows = rows | plus: 1 %}
-        {% endif %}
-
-        {% for row in (1..rows) %}
-            {% assign start_index = row | minus: 1 | times: items_per_row %}
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px;">
-                {% for offset in (0..items_per_row-1) %}
-                    {% assign index = start_index | plus: offset %}
-                    {% if index < total %}
-                        {% assign ta = other_tas[index] %}
-                        <div class="image--cover-container">
-                            <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
-                            {% if ta.webpage %}
-                            <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
-                            {% else %}
-                            <p>{{ ta.name }}</p>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
+        <!-- بقیه TAها (از نفر سوم به بعد) -->
+        {% assign remaining_tas = site.data.people.teaching_assistants | slice:2, 999 %}
+        {% if remaining_tas.size > 0 %}
+        <h2>Teaching Assistants</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+            {% for ta in remaining_tas %}
+            <div class="image--cover-container">
+                <img src="{{ ta.profile_pic | prepend: site.baseurl }}" class="image--cover">
+                {% if ta.webpage %}
+                <p><a href="{{ ta.webpage }}">{{ ta.name }}</a></p>
+                {% else %}
+                <p>{{ ta.name }}</p>
+                {% endif %}
             </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
         {% endif %}
 
     </div>
