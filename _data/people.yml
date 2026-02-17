@@ -3,9 +3,8 @@ instructors:
     profile_pic: /_images/pp/professor.jpg
     webpage: https://www.linkedin.com/in/amin-eskandari
     
-  
-
 teaching_assistants:
+  # HEAD TAها (دو نفر اول)
   - name: Hamid Namjoo  
     profile_pic: /_images/pp/Hamid_Namjoo.jpg
     webpage: https://www.linkedin.com/in/hmaid-namjoo
@@ -16,32 +15,11 @@ teaching_assistants:
     telegram: "@A2_1380"
     email: ""
     
-  - name: Ali Nikvan 
-    profile_pic: /_images/pp/ali nikwan.jpg
-    webpage: "https://t.me/xalleenx"
-    telegram: "@xalleenx"
-
-  - name: Nima Soltani 
-    profile_pic: /_images/pp/nima soltani.jpg
-    webpage: "https://t.me/nim5s0li"
-    email: solinim1382@gmail.com
-
+  # دختران
   - name: Viana Hassan Beigy
     profile_pic: /_images/pp/viana hassan begie.JPEG
     telegram: "@viannahb"
     webpage: https://www.linkedin.com/in/viana-h
-
-  - name:  Reza Rezaei
-    profile_pic: /_images/pp/reaza rezaei.jpg
-    webpage: "https://t.me/reza_rz83"
-    telegram: "@reza_rz83"
-    email: rezarezaee13966@gmail.com
-
-  - name: Babak Janfaza 
-    profile_pic: /_images/babak.jpg
-    webpage: "https://t.me/babakjBEM"
-    telegram: "@babakjBEM"
-    email: BABAK.JANFAZA138006@GMAIL.COM
 
   - name: Elham Mousavi 
     profile_pic: /_images/elham mousavi.jpg
@@ -61,7 +39,25 @@ teaching_assistants:
     telegram: "@Yalda_Msh"
     email: ""
 
+  # پسران
+  - name: Ali Nikvan 
+    profile_pic: /_images/pp/ali nikwan.jpg
+    webpage: "https://t.me/xalleenx"
+    telegram: "@xalleenx"
 
+  - name: Nima Soltani 
+    profile_pic: /_images/pp/nima soltani.jpg
+    webpage: "https://t.me/nim5s0li"
+    email: solinim1382@gmail.com
 
-   
-  
+  - name: Reza Rezaei
+    profile_pic: /_images/pp/reaza rezaei.jpg
+    webpage: "https://t.me/reza_rz83"
+    telegram: "@reza_rz83"
+    email: rezarezaee13966@gmail.com
+
+  - name: Babak Janfaza 
+    profile_pic: /_images/babak.jpg
+    webpage: "https://t.me/babakjBEM"
+    telegram: "@babakjBEM"
+    email: BABAK.JANFAZA138006@GMAIL.COM
