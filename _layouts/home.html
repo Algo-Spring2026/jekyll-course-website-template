@@ -26,25 +26,19 @@ layout: default
     <br>
 
     <div style="text-align: center; margin-top: 20px;">
-    <h2>Course Team</h2>
+        <h2>Course Team</h2>
 
-    {% assign instructors = site.data.people.instructors %}
-    {% assign all_tas = site.data.people.teaching_assistants %}
-    
-    {% assign instructors_count = instructors | size %}
-    {% assign tas_count = all_tas | size %}
-    
-
-    {% assign head_tas = all_tas | slice:0,2 %}
-    {% assign head_count = head_tas | size %}
-    
-    
-    {% assign remaining_tas = all_tas | slice:2, 999 %}
-    {% assign remaining_count = remaining_tas | size %}
-    
-
-    <div class="pyramid-row">
-        {% for person in instructors %}
+        {% assign instructors = site.data.people.instructors %}
+        {% assign all_tas = site.data.people.teaching_assistants %}
+        
+        <!-- دو نفر اول به عنوان HEAD TA -->
+        {% assign head_tas = all_tas | slice:0,2 %}
+        <!-- بقیه TAها -->
+        {% assign regular_tas = all_tas | slice:2, 999 %}
+        
+        <!-- ردیف اول: اساتید -->
+        <div class="pyramid-row">
+            {% for person in instructors %}
             <div class="image--cover-container">
                 <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
                 {% if person.webpage %}
@@ -54,13 +48,13 @@ layout: default
                 {% endif %}
                 <span class="role-badge role-instructor">INSTRUCTOR</span>
             </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
 
-        
-    {% if head_count > 0 %}
-    <div class="pyramid-row">
-        {% for person in head_tas %}
+        <!-- ردیف دوم: HEAD TAها -->
+        {% if head_tas.size > 0 %}
+        <div class="pyramid-row">
+            {% for person in head_tas %}
             <div class="image--cover-container">
                 <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
                 {% if person.webpage %}
@@ -70,52 +64,52 @@ layout: default
                 {% endif %}
                 <span class="role-badge role-head-ta">HEAD TA</span>
             </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    
-    {% if remaining_count > 0 %}
-        {% assign first_row_size = 4 %}
-        {% if remaining_count < 4 %}
-            {% assign first_row_size = remaining_count %}
-        {% endif %}
-        
-        <div class="pyramid-row">
-            {% for i in (0..first_row_size-1) %}
-                {% assign person = remaining_tas[i] %}
-                <div class="image--cover-container">
-                    <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
-                    {% if person.webpage %}
-                        <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
-                    {% else %}
-                        <p>{{ person.name }}</p>
-                    {% endif %}
-                    <span class="role-badge role-ta">TA</span>
-                </div>
             {% endfor %}
         </div>
+        {% endif %}
 
-        
-        {% if remaining_count > 4 %}
-            {% assign second_row_size = remaining_count | minus: 4 %}
+        <!-- TAهای عادی در دو ردیف ۴ تایی -->
+        {% if regular_tas.size > 0 %}
+            <!-- ردیف اول TAها (حداکثر ۴ نفر) -->
             <div class="pyramid-row">
-                {% for i in (0..second_row_size-1) %}
-                    {% assign index = i | plus: 4 %}
-                    {% assign person = remaining_tas[index] %}
-                    <div class="image--cover-container">
-                        <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
-                        {% if person.webpage %}
-                            <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
-                        {% else %}
-                            <p>{{ person.name }}</p>
-                        {% endif %}
-                        <span class="role-badge role-ta">TA</span>
-                    </div>
+                {% for i in (0..3) %}
+                    {% if i < regular_tas.size %}
+                        {% assign person = regular_tas[i] %}
+                        <div class="image--cover-container">
+                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
+                            {% if person.webpage %}
+                                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                            {% else %}
+                                <p>{{ person.name }}</p>
+                            {% endif %}
+                            <span class="role-badge role-ta">TA</span>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
+
+            <!-- ردیف دوم TAها (نفرات ۴ به بعد) -->
+            {% if regular_tas.size > 4 %}
+            <div class="pyramid-row">
+                {% for i in (4..regular_tas.size) %}
+                    {% if i < regular_tas.size %}
+                        {% assign person = regular_tas[i] %}
+                        <div class="image--cover-container">
+                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
+                            {% if person.webpage %}
+                                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                            {% else %}
+                                <p>{{ person.name }}</p>
+                            {% endif %}
+                            <span class="role-badge role-ta">TA</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
         {% endif %}
-    {% endif %}
+    </div>
+
 </div>
 
 <style>
