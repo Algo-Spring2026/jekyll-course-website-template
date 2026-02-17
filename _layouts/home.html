@@ -1,117 +1,3 @@
----
-layout: default
----
-
-<div class="home">
-
-    <h1>{{ site.course_name }} <span style="font-size: 20px;color: #0006;">/ {{ site.course_semester }} </span></h1>
-
-    {% include announcements.html %}
-    <br />
-
-    <h2>Course Description</h2>
-    <p>{{ site.course_description }}</p>
-    
-    {{ content }}
-
-    {% if site.data.previous_offering and site.data.previous_offering.offerings and site.data.previous_offering.offerings.size > 0 %}
-    <h2>Previous Offerings</h2>
-    <ul class="previous-offerings">
-    {% for offer in site.data.previous_offering.offerings %}
-    <li><a href="{{ offer.url }}">{{offer.title}}</a></li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-
-    <br>
-
-    <div style="text-align: center; margin-top: 20px;">
-        <h2>Course Team</h2>
-
-        {% assign instructors = site.data.people.instructors %}
-        {% assign all_tas = site.data.people.teaching_assistants %}
-        
-        <!-- دو نفر اول به عنوان HEAD TA -->
-        {% assign head_tas = all_tas | slice:0,2 %}
-        <!-- بقیه TAها -->
-        {% assign regular_tas = all_tas | slice:2, 999 %}
-        
-        <!-- ردیف اول: اساتید -->
-        <div class="pyramid-row">
-            {% for person in instructors %}
-            <div class="image--cover-container">
-                <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
-                {% if person.webpage %}
-                    <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
-                {% else %}
-                    <p>{{ person.name }}</p>
-                {% endif %}
-                <span class="role-badge role-instructor">INSTRUCTOR</span>
-            </div>
-            {% endfor %}
-        </div>
-
-        <!-- ردیف دوم: HEAD TAها -->
-        {% if head_tas.size > 0 %}
-        <div class="pyramid-row">
-            {% for person in head_tas %}
-            <div class="image--cover-container">
-                <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
-                {% if person.webpage %}
-                    <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
-                {% else %}
-                    <p>{{ person.name }}</p>
-                {% endif %}
-                <span class="role-badge role-head-ta">HEAD TA</span>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <!-- TAهای عادی در دو ردیف ۴ تایی -->
-        {% if regular_tas.size > 0 %}
-            <!-- ردیف اول TAها (حداکثر ۴ نفر) -->
-            <div class="pyramid-row">
-                {% for i in (0..3) %}
-                    {% if i < regular_tas.size %}
-                        {% assign person = regular_tas[i] %}
-                        <div class="image--cover-container">
-                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
-                            {% if person.webpage %}
-                                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
-                            {% else %}
-                                <p>{{ person.name }}</p>
-                            {% endif %}
-                            <span class="role-badge role-ta">TA</span>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            <!-- ردیف دوم TAها (نفرات ۴ به بعد) -->
-            {% if regular_tas.size > 4 %}
-            <div class="pyramid-row">
-                {% for i in (4..regular_tas.size) %}
-                    {% if i < regular_tas.size %}
-                        {% assign person = regular_tas[i] %}
-                        <div class="image--cover-container">
-                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" alt="{{ person.name }}">
-                            {% if person.webpage %}
-                                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
-                            {% else %}
-                                <p>{{ person.name }}</p>
-                            {% endif %}
-                            <span class="role-badge role-ta">TA</span>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
-        {% endif %}
-    </div>
-
-</div>
-
 <style>
 .pyramid-row {
     display: flex;
@@ -125,19 +11,19 @@ layout: default
     width: 130px;
     margin: 0;
     text-align: center;
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: 10px 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: transparent;  /* حذف پس‌زمینه */
+    border-radius: 0;         /* حذف گوشه‌های گرد */
+    padding: 5px;             /* کاهش padding */
+    box-shadow: none;         /* حذف سایه */
     position: relative;
 }
 
 .image--cover {
     width: 100px;
     height: 100px;
-    border-radius: 50%;
+    border-radius: 50%;      /* حفظ گرد بودن تصاویر */
     object-fit: cover;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .role-badge {
@@ -147,7 +33,7 @@ layout: default
     padding: 3px 8px;
     border-radius: 12px;
     color: white;
-    margin-top: 5px;
+    margin-top: 3px;
     text-transform: uppercase;
 }
 
@@ -166,7 +52,7 @@ layout: default
 @media (max-width: 600px) {
     .image--cover-container {
         width: 100px;
-        padding: 5px;
+        padding: 3px;
     }
     .image--cover {
         width: 70px;
