@@ -25,10 +25,10 @@ layout: default
 
     <br>
 
-    <!-- ساختار اعضای تیم (مشابه سایت مشابه) -->
+    
     <div class="staff-grid" style="text-align: center; margin-top: 20px;">
 
-        <!-- استاد -->
+        
         <h2 class="role-title">Instructor</h2>
         <div class="staff-row single" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
             {% for ins in site.data.people.instructors %}
@@ -43,7 +43,7 @@ layout: default
             {% endfor %}
         </div>
 
-        <!-- دو نفر اول به عنوان HEAD TA -->
+        
         {% assign head_tas = site.data.people.teaching_assistants | slice:0,2 %}
         {% if head_tas.size > 0 %}
         <h2 class="role-title">Head Teaching Assistants</h2>
@@ -61,22 +61,46 @@ layout: default
         </div>
         {% endif %}
 
-        <!-- بقیه TAها -->
+    
         {% assign regular_tas = site.data.people.teaching_assistants | slice:2, 999 %}
         {% if regular_tas.size > 0 %}
         <h2 class="role-title">Teaching Assistants</h2>
-        <div class="staff-row triple" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-            {% for person in regular_tas %}
-            <div class="person" style="width: 130px; text-align: center;">
-                <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
-                {% if person.webpage %}
-                <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
-                {% else %}
-                <p>{{ person.name }}</p>
-                {% endif %}
+            
+            
+            <div class="staff-row triple" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                {% for i in (0..3) %}
+                    {% if i < regular_tas.size %}
+                        {% assign person = regular_tas[i] %}
+                        <div class="person" style="width: 130px; text-align: center;">
+                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
+                            {% if person.webpage %}
+                            <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                            {% else %}
+                            <p>{{ person.name }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
+
+            
+            {% if regular_tas.size > 4 %}
+            <div class="staff-row triple" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+                {% for i in (4..regular_tas.size) %}
+                    {% if i < regular_tas.size %}
+                        {% assign person = regular_tas[i] %}
+                        <div class="person" style="width: 130px; text-align: center;">
+                            <img src="{{ person.profile_pic | prepend: site.baseurl }}" class="image--cover" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
+                            {% if person.webpage %}
+                            <p><a href="{{ person.webpage }}">{{ person.name }}</a></p>
+                            {% else %}
+                            <p>{{ person.name }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
         {% endif %}
 
     </div>
